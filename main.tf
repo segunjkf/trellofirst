@@ -119,7 +119,7 @@ resource "aws_route_table" "private0" {
     nat_gateway_id = aws_nat_gateway.main0.id
   }
  tags = {
-    name = "private"
+    name = "private0"
    }
 
 }
