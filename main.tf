@@ -19,6 +19,7 @@ resource "aws_subnet" "public0" {
 resource "aws_subnet" "private1" {
   vpc_id     = aws_vpc.my-vpc.id
   cidr_block = "10.0.2.0/24"
+
   tags = {
     name = "private"
   }
@@ -53,7 +54,7 @@ resource "aws_internet_gateway" "main" {
 resource "aws_nat_gateway" "main0" {
   allocation_id = aws_eip.nat1.id
   subnet_id     = aws_subnet.private1.id
-  
+
   tags = {
     name = "main0"
   }
@@ -116,6 +117,7 @@ resource "aws_route_table" "public" {
 
 resource "aws_route_table" "private0" {
   vpc_id = aws_vpc.my-vpc.id
+
   route {
     cidr_block     = "0.0.0.0/0"
     nat_gateway_id = aws_nat_gateway.main0.id
@@ -128,6 +130,7 @@ resource "aws_route_table" "private0" {
 
 resource "aws_route_table" "private1" {
   vpc_id = aws_vpc.my-vpc.id
+  
   route {
     cidr_block     = "0.0.0.0/0"
     nat_gateway_id = aws_nat_gateway.main1.id
@@ -136,11 +139,11 @@ resource "aws_route_table" "private1" {
     name = "private"
   }
 }
-]
 resource "aws_security_group" "allow_tls" {
   name        = "allow_tls"
   description = "Allow TLS inbound traffic"
   vpc_id      = aws_vpc.my-vpc.id
+
   ingress {
     description = "TLS from VPC"
     from_port   = 443
@@ -148,6 +151,7 @@ resource "aws_security_group" "allow_tls" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
   ingress {
     description = "TLS from VPC"
     from_port   = 22
@@ -155,6 +159,7 @@ resource "aws_security_group" "allow_tls" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  
   egress {
     from_port        = 0
     to_port          = 0
