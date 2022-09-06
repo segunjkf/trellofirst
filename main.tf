@@ -140,6 +140,7 @@ resource "aws_route_table" "private1" {
     name = "private"
   }
 }
+
 resource "aws_security_group" "allow_tls" {
   name        = "allow_tls"
   description = "Allow TLS inbound traffic"
