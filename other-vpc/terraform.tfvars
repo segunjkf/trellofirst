@@ -1,4 +1,4 @@
-Env_code = "segun-vpc"
+env_code = "segun-vpc"
 
 vpc_cidr = "10.0.1.0/16"
 

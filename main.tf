@@ -3,7 +3,7 @@ resource "aws_vpc" "my-vpc" {
   instance_tenancy = "default"
 
   tags = {
-    name = var.Env_code
+    name = var.env_code
   }
 }
 
@@ -14,7 +14,7 @@ resource "aws_subnet" "private" {
   cidr_block = var.private_cidr[count.index]
 
   tags = {
-    name = "${var.Env_code}-private${count.index}"
+    name = "${var.env_code}-private${count.index}"
   }
 }
 
@@ -25,7 +25,7 @@ resource "aws_subnet" "public" {
   cidr_block = var.public_cidr[count.index]
 
   tags = {
-    name = "${var.Env_code}-public${count.index}"
+    name = "${var.env_code}-public${count.index}"
   }
 }
 
@@ -33,7 +33,7 @@ resource "aws_internet_gateway" "main" {
   vpc_id = aws_vpc.my-vpc.id
 
   tags = {
-    name = var.Env_code
+    name = var.env_code
   }
 }
 
@@ -44,7 +44,7 @@ resource "aws_nat_gateway" "main" {
   subnet_id     = aws_subnet.private[count.index].id
 
   tags = {
-    name = "${var.Env_code}-main${count.index}"
+    name = "${var.env_code}-main${count.index}"
   }
 }
 
@@ -54,7 +54,7 @@ resource "aws_eip" "nat" {
   vpc = true
 
   tags = {
-    name = "${var.Env_code}-nats${count.index}"
+    name = "${var.env_code}-nats${count.index}"
   }
 }
 
@@ -126,6 +126,6 @@ resource "aws_security_group" "allow_tls" {
   }
 
   tags = {
-    Name = "${var.Env_code}-my-sg"
+    Name = "${var.env_code}-my-sg"
   }
 }
