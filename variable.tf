@@ -1,6 +1,4 @@
-variable "env_code" {
-  type = string
-}
+variable "env_code" {}
 
 variable "vpc_cidr" {}
 
