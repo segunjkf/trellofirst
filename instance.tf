@@ -1,6 +1,7 @@
 data "aws_ami" "linux-image" {
   most_recent = true
   owners      = ["amazon"]
+
   filter {
     name   = "name"
     values = [var.image_name]
