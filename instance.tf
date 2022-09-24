@@ -27,6 +27,14 @@ resource "aws_security_group" "public" {
     cidr_blocks = [var.sg_cidr]
   }
 
+  ingress {
+    description = "Https from VPC"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = [var.vpc_cidr]
+  }
+
   egress {
     from_port   = 0
     to_port     = 0
@@ -70,6 +78,8 @@ resource "aws_instance" "public" {
   subnet_id              = aws_subnet.public[0].id
   vpc_security_group_ids = [aws_security_group.public.id]
   key_name               = "ansible"
+
+  user_data = file("user-data.sh")
 
   associate_public_ip_address = true
 
