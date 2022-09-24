@@ -85,8 +85,6 @@ resource "aws_instance" "private" {
   vpc_security_group_ids = [aws_security_group.private.id]
   key_name               = "ansible"
 
-  associate_public_ip_address = true
-
   tags = {
     Name = "${var.env_code}-private"
   }
