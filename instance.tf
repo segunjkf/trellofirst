@@ -11,11 +11,10 @@ data "aws_ami" "linux-image" {
     name   = "virtualization-type"
     values = ["hvm"]
   }
-
 }
 
 resource "aws_security_group" "public" {
-  name        = "${var.env_code}-piblic"
+  name        = "${var.env_code}-public"
   description = "Allow ssh inbound traffic"
   vpc_id      = aws_vpc.my-vpc.id
 
@@ -23,16 +22,16 @@ resource "aws_security_group" "public" {
     description = "SSH from VPC"
     from_port   = 22
     to_port     = 22
-    protocol    = "tcp"
+    protocol    = "ssh"
     cidr_blocks = [var.sg_cidr]
   }
 
   ingress {
-    description = "Https from VPC"
+    description = "HTTPS from VPC"
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = [var.vpc_cidr]
+    cidr_blocks = [var.sg_cidr]
   }
 
   egress {
@@ -56,7 +55,7 @@ resource "aws_security_group" "private" {
     description = "SSH from VPC"
     from_port   = 22
     to_port     = 22
-    protocol    = "tcp"
+    protocol    = "ssh"
     cidr_blocks = [var.vpc_cidr]
   }
 
