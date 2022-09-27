@@ -22,7 +22,7 @@ resource "aws_security_group" "public" {
     description = "SSH from VPC"
     from_port   = 22
     to_port     = 22
-    protocol    = "ssh"
+    protocol    = "tcp"
     cidr_blocks = [var.sg_cidr]
   }
 
@@ -55,7 +55,7 @@ resource "aws_security_group" "private" {
     description = "SSH from VPC"
     from_port   = 22
     to_port     = 22
-    protocol    = "ssh"
+    protocol    = "tcp"
     cidr_blocks = [var.vpc_cidr]
   }
 
