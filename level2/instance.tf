@@ -98,3 +98,4 @@ resource "aws_instance" "private" {
     Name = "${var.env_code}-private"
   }
 }
+
