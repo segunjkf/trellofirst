@@ -4,7 +4,7 @@
 #tf state files
 *.tfstate
 *.tfstate.*
-
+.terraform.lock.hcl
 # tf varaible files, may inculde sensstive data
  *.tfvars
  

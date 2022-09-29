@@ -16,7 +16,7 @@ data "aws_ami" "linux-image" {
 resource "aws_security_group" "public" {
   name        = "${var.env_code}-public"
   description = "Allow ssh inbound traffic"
-  vpc_id      = aws_vpc.my-vpc.id
+  vpc_id      = data.terraform_remote_state.layer1.outputs.vpc-id
 
   ingress {
     description = "SSH from VPC"
@@ -31,7 +31,7 @@ resource "aws_security_group" "public" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = [var.sg_cidr]
+    cidr_blocks = [data.terraform_remote_state.layer1.outputs.vpc_cidr]
   }
 
   egress {
@@ -49,14 +49,14 @@ resource "aws_security_group" "public" {
 resource "aws_security_group" "private" {
   name        = "${var.env_code}-private"
   description = "Allow SSH inbound traffic"
-  vpc_id      = aws_vpc.my-vpc.id
+  vpc_id      = data.terraform_remote_state.layer1.outputs.vpc-id
 
   ingress {
     description = "SSH from VPC"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = [var.vpc_cidr]
+    cidr_blocks = [data.terraform_remote_state.layer1.outputs.vpc_cidr]
   }
 
   egress {
@@ -74,7 +74,7 @@ resource "aws_security_group" "private" {
 resource "aws_instance" "public" {
   ami                    = data.aws_ami.linux-image.id
   instance_type          = var.instance_type
-  subnet_id              = aws_subnet.public[0].id
+  subnet_id              = data.terraform_remote_state.layer1.outputs.subnet_id_public[0]
   vpc_security_group_ids = [aws_security_group.public.id]
   key_name               = "ansible"
 
@@ -90,7 +90,7 @@ resource "aws_instance" "public" {
 resource "aws_instance" "private" {
   ami                    = data.aws_ami.linux-image.id
   instance_type          = var.instance_type
-  subnet_id              = aws_subnet.private[0].id
+  subnet_id              = data.terraform_remote_state.layer1.outputs.subnet_id_private[0]
   vpc_security_group_ids = [aws_security_group.private.id]
   key_name               = "ansible"
 
