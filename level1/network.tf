@@ -18,12 +18,17 @@ resource "aws_subnet" "private" {
   }
 }
 
+data "aws_availability_zones" "available-names" {
+  state = "available"
+}
+
 resource "aws_subnet" "public" {
   count = length(var.public_cidr)
 
   vpc_id     = aws_vpc.my-vpc.id
   cidr_block = var.public_cidr[count.index]
 
+  availability_zone = data.aws_availability_zones.available-names.names[count.index]
   tags = {
     name = "${var.env_code}-public${count.index}"
   }

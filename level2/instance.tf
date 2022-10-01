@@ -59,6 +59,16 @@ resource "aws_security_group" "private" {
     cidr_blocks = [data.terraform_remote_state.layer1.outputs.vpc_cidr]
   }
 
+  ingress {
+    description     = "Https from load balancer"
+    from_port       = 80
+    to_port         = 80
+    protocol        = "tcp"
+    security_groups = [aws_security_group.load_balanacer-sg.id]
+
+  }
+
+
   egress {
     from_port   = 0
     to_port     = 0
@@ -78,8 +88,6 @@ resource "aws_instance" "public" {
   vpc_security_group_ids = [aws_security_group.public.id]
   key_name               = "ansible"
 
-  user_data = file("user-data.sh")
-
   associate_public_ip_address = true
 
   tags = {
@@ -94,6 +102,7 @@ resource "aws_instance" "private" {
   vpc_security_group_ids = [aws_security_group.private.id]
   key_name               = "ansible"
 
+  user_data = file("user-data.sh")
   tags = {
     Name = "${var.env_code}-private"
   }

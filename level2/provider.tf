@@ -10,7 +10,7 @@ terraform {
     bucket         = "cloud-learning-bucket112"
     key            = "layer2.tfstate"
     region         = "eu-west-1"
-    dynamodb_table = "terraform-lock"
+    dynamodb_table = "Terrafrom-remote-state"
   }
 
   required_version = ">= 1.1.9"
