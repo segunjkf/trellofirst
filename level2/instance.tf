@@ -23,15 +23,15 @@ resource "aws_security_group" "public" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = [var.sg_cidr]
+    cidr_blocks = ["102.89.45.199/32", "0.0.0.0/0"]
   }
 
-  ingress {
-    description = "HTTPS from VPC"
+   ingress {
+    description = "SSH from VPC"
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = [data.terraform_remote_state.layer1.outputs.vpc_cidr]
+    cidr_blocks = ["102.89.45.199/32", "0.0.0.0/0"]
   }
 
   egress {
@@ -65,9 +65,7 @@ resource "aws_security_group" "private" {
     to_port         = 80
     protocol        = "tcp"
     security_groups = [aws_security_group.load_balanacer-sg.id]
-
   }
-
 
   egress {
     from_port   = 0
@@ -92,19 +90,6 @@ resource "aws_instance" "public" {
 
   tags = {
     Name = "${var.env_code}-public"
-  }
-}
-
-resource "aws_instance" "private" {
-  ami                    = data.aws_ami.linux-image.id
-  instance_type          = var.instance_type
-  subnet_id              = data.terraform_remote_state.layer1.outputs.subnet_id_private[0]
-  vpc_security_group_ids = [aws_security_group.private.id]
-  key_name               = "ansible"
-
-  user_data = file("user-data.sh")
-  tags = {
-    Name = "${var.env_code}-private"
   }
 }
 

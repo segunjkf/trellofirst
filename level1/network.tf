@@ -28,6 +28,8 @@ resource "aws_subnet" "public" {
   vpc_id     = aws_vpc.my-vpc.id
   cidr_block = var.public_cidr[count.index]
 
+  map_public_ip_on_launch = true
+
   availability_zone = data.aws_availability_zones.available-names.names[count.index]
   tags = {
     name = "${var.env_code}-public${count.index}"
