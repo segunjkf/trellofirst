@@ -26,7 +26,7 @@ resource "aws_security_group" "public" {
     cidr_blocks = ["102.89.45.199/32", "0.0.0.0/0"]
   }
 
-   ingress {
+  ingress {
     description = "SSH from VPC"
     from_port   = 80
     to_port     = 80
