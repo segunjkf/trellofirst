@@ -13,7 +13,6 @@ data "aws_ami" "linux-image" {
   }
 }
 
-
 resource "aws_security_group" "private" {
   name        = "${var.env_code}-private"
   description = "Allow SSH inbound traffic"
