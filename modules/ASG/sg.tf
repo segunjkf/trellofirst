@@ -1,29 +1,14 @@
-data "aws_ami" "linux-image" {
-  most_recent = true
-  owners      = ["amazon"]
-
-  filter {
-    name   = "name"
-    values = [var.image_name]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-}
-
 resource "aws_security_group" "private" {
   name        = "${var.env_code}-private"
   description = "Allow SSH inbound traffic"
-  vpc_id      = data.terraform_remote_state.layer1.outputs.vpc-id
+  vpc_id      = var.vpc_id
 
   ingress {
     description     = "Https from load balancer"
     from_port       = 80
     to_port         = 80
     protocol        = "tcp"
-    security_groups = [aws_security_group.load_balanacer-sg.id]
+    security_groups = [var.lb-sg]
   }
 
   egress {
