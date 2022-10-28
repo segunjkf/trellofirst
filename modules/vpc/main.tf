@@ -33,7 +33,8 @@ resource "aws_subnet" "public" {
 
   map_public_ip_on_launch = true
 
-  #availability_zone = data.aws_availability_zones.available-names.names[count.index]
+  availability_zone = data.aws_availability_zones.available-names.names[count.index]
+  
   tags = {
     name = "${var.env_code}-public${count.index}"
   }

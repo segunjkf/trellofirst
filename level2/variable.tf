@@ -7,7 +7,5 @@ variable "ami" {}
 variable "image_name" {}
 
 
-variable "vpc_id" {}
-
 
 
