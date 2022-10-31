@@ -5,3 +5,5 @@ output "lb-sg" {
 output "target-arn" {
   value = aws_lb_target_group.main.arn
 }
+
+
