@@ -6,3 +6,6 @@ module "vpc" {
   public_cidr  = var.public_cidr
   vpc_cidr     = var.vpc_cidr
 }
+  
+  
+  
