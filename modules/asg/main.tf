@@ -14,16 +14,17 @@ data "aws_ami" "linux-image" {
 }
 
 resource "aws_launch_configuration" "main" {
+  +--
   name_prefix          = "${var.env_code}-launch-config"
   image_id             = data.aws_ami.linux-image.id
   instance_type        = var.instance_type
   security_groups      = [aws_security_group.private.id]
-  iam_instance_profile = aws_iam_instance_profile.main.name
+  iam+-_instance_profile = aws_iam_instance_profile.main.name
   user_data            = file("user-data.sh")
 
   key_name = "ansible"
 }
-
+-
 resource "aws_autoscaling_group" "main" {
   name             = var.env_code
   min_size         = 2

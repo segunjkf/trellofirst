@@ -11,8 +11,8 @@ resource "aws_subnet" "private" {
   count = length(var.private_cidr)
 
   vpc_id     = aws_vpc.my-vpc.id
-  cidr_block = var.private_cidr[count.index]
 
+  cidr_block = var.private_cidr[count.index]
 
   availability_zone = data.aws_availability_zones.available-names.names[count.index]
 
@@ -52,7 +52,7 @@ resource "aws_nat_gateway" "main" {
   count = length(var.private_cidr)
 
   allocation_id = aws_eip.nat[count.index].id
-  subnet_id     = aws_subnet.private[count.index].id
+  subnet_id     = aws_subnet.public[count.index].id
 
   tags = {
     name = "${var.env_code}-main${count.index}"
