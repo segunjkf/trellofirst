@@ -7,4 +7,3 @@ output "target-arn" {
 }
 
 
-
