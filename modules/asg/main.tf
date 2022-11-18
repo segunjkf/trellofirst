@@ -14,6 +14,7 @@ data "aws_ami" "linux-image" {
 }
 
 resource "aws_launch_configuration" "main" {
+
   name_prefix          = "${var.env_code}-launch-config"
   image_id             = data.aws_ami.linux-image.id
   instance_type        = var.instance_type
