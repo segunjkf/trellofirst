@@ -2,6 +2,7 @@ data "aws_route53_zone" "main" {
   name = "kaytheog.com"
 }
 
+
 resource "aws_route53_record" "www" {
   zone_id = data.aws_route53_zone.main.zone_id
   name    = "www.${data.aws_route53_zone.main.name}"
