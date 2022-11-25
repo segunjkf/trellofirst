@@ -23,7 +23,6 @@ resource "aws_security_group" "load_balanacer-sg" {
   }
 }
 
-
 resource "aws_lb" "main-elb" {
   name               = "main-lb-tf"
   internal           = false
@@ -51,7 +50,6 @@ resource "aws_lb_target_group" "main" {
     matcher             = "200"
   }
 }
-
 
 resource "aws_lb_listener" "main" {
   load_balancer_arn = aws_lb.main-elb.arn
