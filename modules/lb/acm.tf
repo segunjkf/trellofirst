@@ -1,9 +1,10 @@
 resource "aws_acm_certificate" "main" {
   domain_name       = "www.kaytheog.com"
+  subject_alternative_names = ["*.kaytheog.com"]
   validation_method = "DNS"
 
   tags = {
-    Environment = var.env-code
+    Environment = var.env_code
   }
 }
 
@@ -15,6 +16,7 @@ resource "aws_route53_record" "domain-validation" {
       type   = dvo.resource_record_type
     }
   }
+
   allow_overwrite = true
   name            = each.value.name
   records         = [each.value.record]
@@ -25,6 +27,7 @@ resource "aws_route53_record" "domain-validation" {
 
 resource "aws_acm_certificate_validation" "cert-validation" {
   certificate_arn         = aws_acm_certificate.main.arn
-  validation_record_fqdns = [for record in aws_route53_record.example : record.fqdn]
+  validation_record_fqdns = [for record in aws_route53_record.domain-validation : record.fqdn]
 }
+
 
