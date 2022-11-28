@@ -4,7 +4,7 @@ resource "aws_acm_certificate" "main" {
   validation_method = "DNS"
 
   tags = {
-    Environment = var.env_code
+    Name = var.env_code
   }
 }
 
