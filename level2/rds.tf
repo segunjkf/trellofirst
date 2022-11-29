@@ -7,3 +7,5 @@ module "rds" {
   source_Security_group = module.asg.security_group_id
   rds_password          = local.rds_password
 }
+
+
