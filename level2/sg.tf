@@ -32,8 +32,8 @@ module "private_sg" {
 
   computed_ingress_with_source_security_group_id = [
     {
-      rule   = "https-80-tcp"
-      source = module.external_sg.security_group_id
+      rule   = "http-80-tcp"
+      source_security_group_id = module.external_sg.security_group_id 
     }
   ]
 

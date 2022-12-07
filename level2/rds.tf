@@ -7,7 +7,7 @@ module "rds_sg" {
 
   computed_ingress_with_source_security_group_id = [
     {
-      rule   = "https-80-tcp"
+      rule   = "http-80-tcp"
       source_security_group_id = module.private_sg.security_group_id
     }
   ]
