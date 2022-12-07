@@ -30,7 +30,7 @@ module "private_sg" {
   name   = "$(var.env_code)-private"
   vpc_id = data.terraform_remote_state.layer1.outputs.vpc-id
 
-  computed_egress_with_source_security_group_id = [
+  computed_ingress_with_source_security_group_id = [
     {
       rule   = "https-80-tcp"
       source = module.external_sg.security_group_id
@@ -43,7 +43,7 @@ module "private_sg" {
     {
       from_port   = 0
       to_port     = 65535
-      protocol    = "TCP"
+      protocol    = "tcp"
       cidr_blocks = "0.0.0.0/0"
     }
   ]
