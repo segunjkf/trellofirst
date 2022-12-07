@@ -33,7 +33,7 @@ module "ec2autoscaling" {
   image_id        = data.aws_ami.linux-image.id
   instance_type   = "t2.micro"
   key_name        = "ansible"
-  security_groups = [module.external_sg.security_group_id]
+  security_groups = [module.private_sg.security_group_id]
   user_data       = filebase64("user-data.sh")
 
 
